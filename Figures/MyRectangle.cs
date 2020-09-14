@@ -39,8 +39,8 @@ namespace MyPaint.Figures
 
         public override bool Touch(Graphics gr, int x, int y)
         {
-            if (x > X && x < X + W &&
-                y > Y && y < Y + H)
+            if (x >= X && x <= X + W &&
+                y >= Y && y <= Y + H)
             {
                 Select(gr);
                 return true;

@@ -28,19 +28,19 @@ namespace MyPaint.Figures
         private void Select(Graphics gr)
         {
             Rectangle rect = new Rectangle(X - 1, Y - 1, W + 2, H + 2);
-            gr.DrawEllipse(new Pen(Color.Black), rect);
+            gr.DrawRectangle(new Pen(Color.Black), rect);
         }
 
         private void Unselect(Graphics gr)
         {
             Rectangle rect = new Rectangle(X - 1, Y - 1, W + 2, H + 2);
-            gr.DrawEllipse(new Pen(Color.White), rect);
+            gr.DrawRectangle(new Pen(Color.White), rect);
         }
 
         public override bool Touch(Graphics gr, int x, int y)
         {
-            if (x > X && x < X + W &&
-                y > Y && y < Y + H)
+            if (x >= X && x <= X + W &&
+                y >= Y && y <= Y + H)
             {
                 Select(gr);
                 return true;
@@ -53,7 +53,6 @@ namespace MyPaint.Figures
         }
         public override void Move(int x, int y)
         {
-
             X += x;
             Y += y;
         }
