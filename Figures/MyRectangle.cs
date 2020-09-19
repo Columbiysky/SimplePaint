@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 
 namespace MyPaint.Figures
@@ -39,16 +40,26 @@ namespace MyPaint.Figures
             gr.DrawRectangle(new Pen(Color.White), rect);
         }
 
-        public override bool Touch(Graphics gr, int x, int y)
+        public override bool Touch(Graphics gr, int x, int y, out List<Rectangle> Resizers)
         {
+            
             if (x >= X && x <= X + W &&
                 y >= Y && y <= Y + H)
             {
+                List<Rectangle> l = new List<Rectangle>();
+                l.Add(new Rectangle(X - 1, Y - 1, W + 2, H + 2));
+                l.Add(new Rectangle(X - 3, Y - 3, 5, 5)); //left-Top
+                l.Add(new Rectangle(X + W - 2, Y - 3, 5, 5)); //right-Top
+                l.Add(new Rectangle(X - 3, Y + H - 2, 5, 5)); //left-bot
+                l.Add(new Rectangle(X + W - 2, Y + H - 2, 5, 5)); //right-bot
+
+                Resizers = l;
                 Select(gr);
                 return true;
             }
             else
             {
+                Resizers = null;
                 Unselect(gr);
                 return false;
             }

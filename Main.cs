@@ -11,7 +11,7 @@ namespace MyPaint
     public partial class Main : Form
     {
         List<Figure> Figures = new List<Figure>();
-        List<Figure> ResizeTools = new List<Figure>();
+        List<Rectangle> ResizeTools = new List<Rectangle>();
         Dictionary<string, IFigureCreator> Tools = new Dictionary<string, IFigureCreator>();
         IFigureCreator FigureCreator;
         Figure CurrentFig;
@@ -61,10 +61,15 @@ namespace MyPaint
         { 
             foreach (Figure fig in Figures)
                 fig.Draw(e.Graphics);
+
+            if (ResizeTools != null)
+                foreach (var fig in ResizeTools)
+                    e.Graphics.DrawRectangle(new Pen(Color.Black),fig);
         }
 
         private void pictureBox1_MouseDown(object sender, MouseEventArgs e)
         {
+            ResizeTools = null;
             if (FigureCreator != null)
             {
                 var figure = FigureCreator.Create(e.X, e.Y, 50, 50);
@@ -74,7 +79,7 @@ namespace MyPaint
 
             else
                 foreach (var fig in Figures)
-                    if (fig.Touch(gr, e.X, e.Y))
+                    if (fig.Touch(gr, e.X, e.Y, out ResizeTools))
                     {
                         CurrentFig = fig;
                         P = e.Location;
@@ -88,6 +93,7 @@ namespace MyPaint
         {
             if (CurrentFig != null && isPressed)
             {
+                ResizeTools = null;
                 CurrentFig.Move(e.X - P.X, e.Y - P.Y);
                 P = e.Location;
             }

@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using System.Collections.Generic;
+using System.Drawing;
 
 
 namespace MyPaint.Figures
@@ -24,7 +25,7 @@ namespace MyPaint.Figures
         }
 
         public abstract void Draw(Graphics gr);
-        public abstract bool Touch(Graphics gr, int x, int y);
+        public abstract bool Touch(Graphics gr, int x, int y, out List<Rectangle> Resizers);
         public abstract void Resize(Graphics gr, int w, int h);
         public abstract void Move(int dx, int dy);   
     }
