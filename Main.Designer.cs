@@ -30,10 +30,9 @@
         {
             this.RectangelButton = new System.Windows.Forms.Button();
             this.EllipseButton = new System.Windows.Forms.Button();
-            this.MoveButton = new System.Windows.Forms.Button();
+            this.SelectButton = new System.Windows.Forms.Button();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.ClearButton = new System.Windows.Forms.Button();
-            this.ResizeButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -55,14 +54,14 @@
             this.EllipseButton.Text = "Ellipse";
             this.EllipseButton.UseVisualStyleBackColor = true;
             // 
-            // MoveButton
+            // SelectButton
             // 
-            this.MoveButton.Location = new System.Drawing.Point(175, 14);
-            this.MoveButton.Name = "MoveButton";
-            this.MoveButton.Size = new System.Drawing.Size(75, 23);
-            this.MoveButton.TabIndex = 3;
-            this.MoveButton.Text = "Move";
-            this.MoveButton.UseVisualStyleBackColor = true;
+            this.SelectButton.Location = new System.Drawing.Point(175, 14);
+            this.SelectButton.Name = "SelectButton";
+            this.SelectButton.Size = new System.Drawing.Size(75, 23);
+            this.SelectButton.TabIndex = 3;
+            this.SelectButton.Text = "Select";
+            this.SelectButton.UseVisualStyleBackColor = true;
             // 
             // pictureBox1
             // 
@@ -79,31 +78,21 @@
             // 
             // ClearButton
             // 
-            this.ClearButton.Location = new System.Drawing.Point(338, 13);
+            this.ClearButton.Location = new System.Drawing.Point(1367, 14);
             this.ClearButton.Name = "ClearButton";
             this.ClearButton.Size = new System.Drawing.Size(75, 23);
             this.ClearButton.TabIndex = 8;
             this.ClearButton.Text = "Clear";
             this.ClearButton.UseVisualStyleBackColor = true;
             // 
-            // ResizeButton
-            // 
-            this.ResizeButton.Location = new System.Drawing.Point(256, 14);
-            this.ResizeButton.Name = "ResizeButton";
-            this.ResizeButton.Size = new System.Drawing.Size(75, 23);
-            this.ResizeButton.TabIndex = 9;
-            this.ResizeButton.Text = "Resize";
-            this.ResizeButton.UseVisualStyleBackColor = true;
-            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1454, 649);
-            this.Controls.Add(this.ResizeButton);
             this.Controls.Add(this.ClearButton);
             this.Controls.Add(this.pictureBox1);
-            this.Controls.Add(this.MoveButton);
+            this.Controls.Add(this.SelectButton);
             this.Controls.Add(this.EllipseButton);
             this.Controls.Add(this.RectangelButton);
             this.Name = "Main";
@@ -118,10 +107,9 @@
 
         private System.Windows.Forms.Button RectangelButton;
         private System.Windows.Forms.Button EllipseButton;
-        private System.Windows.Forms.Button MoveButton;
+        private System.Windows.Forms.Button SelectButton;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Button ClearButton;
-        private System.Windows.Forms.Button ResizeButton;
     }
 }
 

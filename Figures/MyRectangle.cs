@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using System.Diagnostics;
+using System.Drawing;
 
 namespace MyPaint.Figures
 {
@@ -19,6 +20,7 @@ namespace MyPaint.Figures
 
         }
 
+        [DebuggerStepThrough]
         public override void Draw(Graphics gr)
         {
             Rectangle rect = new Rectangle(X, Y, W, H);
