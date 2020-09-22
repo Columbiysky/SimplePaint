@@ -1,5 +1,4 @@
-﻿using MyPaint.Figures;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
@@ -11,7 +10,8 @@ namespace MyPaint
     public partial class Main : Form
     {
         List<Figure> Figures = new List<Figure>();
-        List<Rectangle> ResizeTools = new List<Rectangle>();
+        //List<Rectangle> ResizeTools = new List<Rectangle>();
+        Manipulator manipulator = new Manipulator();
         Dictionary<string, IFigureCreator> Tools = new Dictionary<string, IFigureCreator>();
         IFigureCreator FigureCreator;
         Figure CurrentFig;
@@ -62,14 +62,11 @@ namespace MyPaint
             foreach (Figure fig in Figures)
                 fig.Draw(e.Graphics);
 
-            if (ResizeTools != null)
-                foreach (var fig in ResizeTools)
-                    e.Graphics.DrawRectangle(new Pen(Color.Black),fig);
+            manipulator.Draw(e.Graphics);
         }
 
         private void pictureBox1_MouseDown(object sender, MouseEventArgs e)
         {
-            ResizeTools = null;
             if (FigureCreator != null)
             {
                 var figure = FigureCreator.Create(e.X, e.Y, 50, 50);
@@ -79,9 +76,9 @@ namespace MyPaint
 
             else
                 foreach (var fig in Figures)
-                    if (fig.Touch(gr, e.X, e.Y, out ResizeTools))
+                    if (fig.Touch(gr, e.X, e.Y))
                     {
-                        CurrentFig = fig;
+                        manipulator.Attach(fig);
                         P = e.Location;
                         isPressed = true;
                         break;
@@ -91,10 +88,9 @@ namespace MyPaint
         [DebuggerStepThrough]
         private void pictureBox1_MouseMove(object sender, MouseEventArgs e)
         {
-            if (CurrentFig != null && isPressed)
+            if (manipulator.fig != null && isPressed)
             {
-                ResizeTools = null;
-                CurrentFig.Move(e.X - P.X, e.Y - P.Y);
+                manipulator.Drag(e.X - P.X, e.Y - P.Y);
                 P = e.Location;
             }
             pictureBox1.Refresh();
@@ -104,7 +100,7 @@ namespace MyPaint
         {
             isPressed = false;
             if(e.X - P.X != 0 && e.Y - P.Y != 0)
-                CurrentFig = null;
+                manipulator.Clear(gr);
         }
     }
 }
