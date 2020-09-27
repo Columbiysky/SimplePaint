@@ -11,7 +11,7 @@ namespace MyPaint
     {
         List<Figure> Figures = new List<Figure>();
         //List<Rectangle> ResizeTools = new List<Rectangle>();
-        Manipulator manipulator = new Manipulator();
+        Manipulator manipulator = new Manipulator(); //decorator
         Dictionary<string, IFigureCreator> Tools = new Dictionary<string, IFigureCreator>();
         IFigureCreator FigureCreator;
         Figure CurrentFig;
@@ -78,7 +78,7 @@ namespace MyPaint
                 foreach (var fig in Figures)
                     if (fig.Touch(gr, e.X, e.Y))
                     {
-                        manipulator.Attach(fig);
+                        manipulator.Attach(fig); //decorator
                         P = e.Location;
                         isPressed = true;
                         break;
