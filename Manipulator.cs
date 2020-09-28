@@ -19,8 +19,8 @@ namespace MyPaint
 
             gr.DrawRectangle(new Pen(Color.Black), new Rectangle(X - 5, Y - 5, 7, 7)); //left-Top - 1
             gr.DrawRectangle(new Pen(Color.Black), new Rectangle(X + W - 2, Y - 5, 7, 7)); //right-Top - 2 
-            gr.DrawRectangle(new Pen(Color.Black), new Rectangle(X - 5, Y + H - 4, 7, 7)); //left-bot - 3
-            gr.DrawRectangle(new Pen(Color.Black), new Rectangle(X + W - 4, Y + H - 4, 7, 7)); //right-bot - 4
+            gr.DrawRectangle(new Pen(Color.Black), new Rectangle(X - 5, Y + H - 2, 7, 7)); //left-bot - 3
+            gr.DrawRectangle(new Pen(Color.Black), new Rectangle(X + W - 2, Y + H - 2, 7, 7)); //right-bot - 4
         }
 
         public override void Move(int dx, int dy)
@@ -35,29 +35,29 @@ namespace MyPaint
 
         public override bool Touch(Graphics gr, int x, int y)
         {
-            if (x >= X - 5 && x <= X + 2 &&
-                y >= Y - 5 && y <= Y + 2)
+            if (x >= X - 7 && x <= X + 3 &&
+                y >= Y - 7 && y <= Y + 3)
             {
                 corner = 1;
                 return true;
             }
 
-            else if (x >= X + W - 2 && x <= X + W + 5 &&
-                y >= Y - 5 && y <= Y + 2)
+            else if (x >= X + W - 3 && x <= X + W + 7 &&
+                y >= Y - 7 && y <= Y + 3)
                  {
                     corner = 2;
                     return true;
                  }
 
-            else if (x >= X - 5 && x <= X + 4 &&
-                 y >= Y + H - 4 && y <= Y + H + 5)
+            else if (x >= X - 7 && x <= X + 3 &&
+                 y >= Y + H - 3 && y <= Y + H + 7)
                  {
                     corner = 3;
                     return true;
                  }
 
-            else if (x >= X + W - 4 && x <= X + W + 5 &&
-                 y >= Y + H - 4 && y <= Y + H + 5)
+            else if (x >= X + W - 3 && x <= X + W + 7 &&
+                 y >= Y + H - 3 && y <= Y + H + 7)
                  {
                     corner = 4;
                     return true;

@@ -10,7 +10,6 @@ namespace MyPaint
     public partial class Main : Form
     {
         List<Figure> Figures = new List<Figure>();
-        //List<Rectangle> ResizeTools = new List<Rectangle>();
         Manipulator manipulator = new Manipulator(); //decorator
         Dictionary<string, IFigureCreator> Tools = new Dictionary<string, IFigureCreator>();
         IFigureCreator FigureCreator;
@@ -86,7 +85,7 @@ namespace MyPaint
                     }
         }
 
-        //[DebuggerStepThrough]
+        [DebuggerStepThrough]
         private void pictureBox1_MouseMove(object sender, MouseEventArgs e)
         {
             if (manipulator.fig != null && isPressed)
