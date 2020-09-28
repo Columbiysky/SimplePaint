@@ -26,7 +26,7 @@ namespace MyPaint
 
         public abstract void Draw(Graphics gr);
         public abstract bool Touch(Graphics gr, int x, int y);
-        public abstract void Resize(Graphics gr, int w, int h);
+        public abstract void Resize(int c, int dx, int dy);
         public abstract void Move(int dx, int dy);   
     }
 }

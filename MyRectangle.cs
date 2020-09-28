@@ -63,9 +63,33 @@ namespace MyPaint
             }
         }
 
-        public override void Resize(Graphics gr, int w, int h)
+        public override void Resize(int c, int dx, int dy)
         {
-            
+            if (c == 1)
+            {
+                X += dx;
+                Y += dy;
+                W -= dx;
+                H -= dy;
+            }
+            else if (c == 2)
+            {
+                Y += dy;
+                W += dx;
+                H -= dy;
+            }
+            else if (c == 3)
+            {
+                X += dx;
+                W -= dx;
+                H += dy;
+            }
+            else if (c == 4)
+            {
+                W += dx;
+                H += dy;
+            }
+                
         }
 
         public override void Move(int x, int y)

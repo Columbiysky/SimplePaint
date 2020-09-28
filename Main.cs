@@ -79,13 +79,14 @@ namespace MyPaint
                     if (fig.Touch(gr, e.X, e.Y))
                     {
                         manipulator.Attach(fig); //decorator
+                        manipulator.Touch(gr, e.X, e.Y);
                         P = e.Location;
                         isPressed = true;
                         break;
                     }
         }
 
-        [DebuggerStepThrough]
+        //[DebuggerStepThrough]
         private void pictureBox1_MouseMove(object sender, MouseEventArgs e)
         {
             if (manipulator.fig != null && isPressed)
