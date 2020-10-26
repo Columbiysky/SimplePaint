@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
+using System.Windows.Input;
 
 namespace MyPaint
 {
@@ -11,6 +12,7 @@ namespace MyPaint
     {
         List<Figure> Figures = new List<Figure>();
         Manipulator manipulator = new Manipulator(); //decorator
+        Group g = new Group(); //che-to tam
         Dictionary<string, IFigureCreator> Tools = new Dictionary<string, IFigureCreator>();
         IFigureCreator FigureCreator;
         Figure CurrentFig;
@@ -62,6 +64,7 @@ namespace MyPaint
                 fig.Draw(e.Graphics);
 
             manipulator.Draw(e.Graphics);
+            g.Draw(e.Graphics);
         }
 
         private void pictureBox1_MouseDown(object sender, MouseEventArgs e)
@@ -77,11 +80,24 @@ namespace MyPaint
                 foreach (var fig in Figures)
                     if (fig.Touch(gr, e.X, e.Y))
                     {
-                        manipulator.Attach(fig); //decorator
-                        manipulator.Touch(gr, e.X, e.Y);
-                        P = e.Location;
-                        isPressed = true;
-                        break;
+                        if (Control.ModifierKeys == Keys.Control)
+                        {
+                            g.Add(fig);
+                            g.Touch(gr, e.X, e.Y);
+                            manipulator.Clear(gr);
+                            P = e.Location;
+                            isPressed = true;
+                            break;
+                        }
+
+                        else
+                        {
+                            manipulator.Attach(fig); //decorator
+                            manipulator.Touch(gr, e.X, e.Y);
+                            P = e.Location;
+                            isPressed = true;
+                            break;
+                        }
                     }
         }
 
@@ -90,6 +106,8 @@ namespace MyPaint
         {
             if (manipulator.fig != null && isPressed)
             {
+                if (g.figuresCount != 0 && g.Corner == -1)
+                    g.Move(e.X - P.X, e.Y - P.Y);
                 manipulator.Drag(e.X - P.X, e.Y - P.Y);
                 P = e.Location;
             }
@@ -99,8 +117,11 @@ namespace MyPaint
         private void pictureBox1_MouseUp(object sender, MouseEventArgs e)
         {
             isPressed = false;
-            if(e.X - P.X != 0 && e.Y - P.Y != 0)
+            if (e.X - P.X != 0 && e.Y - P.Y != 0)
+            {
                 manipulator.Clear(gr);
+                g.Clear(gr);
+            }
         }
     }
 }

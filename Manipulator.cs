@@ -89,6 +89,7 @@ namespace MyPaint
             }
             else if (corner == 1)
             {
+                
                 X += dx;
                 Y += dy;
                 W -= dx;
