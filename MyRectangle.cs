@@ -24,19 +24,19 @@ namespace MyPaint
         [DebuggerStepThrough]
         public override void Draw(Graphics gr)
         {
-            Rectangle rect = new Rectangle(X, Y, W, H);
+            Rectangle rect = new Rectangle((int)X, (int)Y, (int)W, (int)H);
             gr.DrawRectangle(new Pen(Color.Red), rect);
         }
 
         private void Select(Graphics gr)
         {
-            Rectangle rect = new Rectangle(X - 1, Y - 1, W + 2, H + 2);
+            Rectangle rect = new Rectangle((int)X - 1, (int)Y - 1, (int)W + 2, (int)H + 2);
             gr.DrawRectangle(new Pen(Color.Black), rect);
         }
 
         private void Unselect(Graphics gr)
         {
-            Rectangle rect = new Rectangle(X - 1, Y - 1, W + 2, H + 2);
+            Rectangle rect = new Rectangle((int)X - 1, (int)Y - 1, (int)W + 2, (int)H + 2);
             gr.DrawRectangle(new Pen(Color.White), rect);
         }
 
@@ -47,11 +47,11 @@ namespace MyPaint
                 y >= Y && y <= Y + H)
             {
                 List<Rectangle> l = new List<Rectangle>();
-                l.Add(new Rectangle(X - 1, Y - 1, W + 2, H + 2));
-                l.Add(new Rectangle(X - 3, Y - 3, 5, 5)); //left-Top
-                l.Add(new Rectangle(X + W - 2, Y - 3, 5, 5)); //right-Top
-                l.Add(new Rectangle(X - 3, Y + H - 2, 5, 5)); //left-bot
-                l.Add(new Rectangle(X + W - 2, Y + H - 2, 5, 5)); //right-bot
+                l.Add(new Rectangle((int)X - 1, (int)Y - 1, (int)W + 2, (int)H + 2));
+                l.Add(new Rectangle((int)X - 3, (int)Y - 3, 5, 5)); //left-Top
+                l.Add(new Rectangle((int)(X + W - 2), (int)Y - 3, 5, 5)); //right-Top
+                l.Add(new Rectangle((int)X - 3, (int)(Y + H - 2), 5, 5)); //left-bot
+                l.Add(new Rectangle((int)(X + W - 2), (int)(Y + H - 2), 5, 5)); //right-bot
 
                 Select(gr);
                 return true;

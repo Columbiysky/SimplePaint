@@ -6,7 +6,7 @@ namespace MyPaint
 {
     abstract class Figure
     {
-        public  int X { get; protected set; }
+        public int X { get; protected set; }
         public int Y { get; protected set; }
         public int W { get; protected set; }
         public int H { get; protected set; }
