@@ -22,17 +22,10 @@ namespace MyPaint
 
         public override void Draw(Graphics gr)
         {
-            if (figures.Count == 0) return;
-
-            gr.DrawRectangle(new Pen(Color.Black), new Rectangle((int)X - 1, (int)Y - 1, (int)W + 2, (int)H + 2)); //Main
-
-            gr.DrawRectangle(new Pen(Color.Black), new Rectangle((int)X - 5, (int)Y - 5, 7, 7)); //left-Top - 1
-            gr.DrawRectangle(new Pen(Color.Black), new Rectangle((int)(X + W - 2), (int)Y - 5, 7, 7)); //right-Top - 2
-            gr.DrawRectangle(new Pen(Color.Black), new Rectangle((int)X - 5, (int)(Y + H - 2), 7, 7)); //left-bot - 3
-            gr.DrawRectangle(new Pen(Color.Black), new Rectangle((int)(X + W - 2), (int)(Y + H - 2), 7, 7)); //right-bot - 4
+            //nothing here
         }
 
-        public override void Move(int dx, int dy)
+        public override void Move(float dx, float dy)
         {
             foreach (var f in figures)
                 f.Move(dx, dy);
@@ -41,44 +34,19 @@ namespace MyPaint
             Update();
         }
 
-        public override void Resize(int c, int dx, int dy)
+        public override void Resize(int c, float dx, float dy)
         {
-            int kw = dx / W, kh = dy / H;
+            float kw = dx / W, kh = dy / H;
             foreach (var f in figures)
             {
                 f.Resize(c, f.W * kw, f.H * kh);
                 f.Move(kw * (f.X - X), kh * (f.Y - Y));
             }
-            //W += dx;
-            //H += dy;
-            //Update();
-            if (c == 1)
-            {
-                X += dx;
-                Y += dy;
-                W -= dx;
-                H -= dy;
-            }
-            else if (c == 2)
-            {
-                Y += dy;
-                W += dx;
-                H -= dy;
-            }
-            else if (c == 3)
-            {
-                X += dx;
-                W -= dx;
-                H += dy;
-            }
-            else if (c == 4)
-            {
-                W += dx;
-                H += dy;
-            }
+            W += dx;
+            H += dy;
         }
 
-        public override bool Touch(Graphics gr, int x, int y)
+        public override bool Touch(Graphics gr, float x, float y)
         {
             if (x >= X - 2 && x <= X + 2 &&
                 y >= Y - 2 && y <= Y + 2)
@@ -126,14 +94,16 @@ namespace MyPaint
 
         public void Add(Figure f)
         {
+            foreach (var fig in figures)
+                if (fig == f)
+                    return;
             figures.Add(f);
             Update();
         }
 
-        public void Clear(Graphics gr)
+        public void Clear()
         {
             figures.Clear();
-            gr.DrawRectangle(new Pen(Color.White), new Rectangle((int)X - 1, (int)Y - 1, (int)W + 2, (int)H + 2));
             X = Y = W = H = 0;
         }
 

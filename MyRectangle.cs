@@ -14,11 +14,9 @@ namespace MyPaint
             }
         }
 
-
-
         private  MyRectangle(int x, int y, int w, int h) : base(x, y, w, h)
         {
-
+            //nothing here
         }
 
         [DebuggerStepThrough]
@@ -40,7 +38,7 @@ namespace MyPaint
             gr.DrawRectangle(new Pen(Color.White), rect);
         }
 
-        public override bool Touch(Graphics gr, int x, int y)
+        public override bool Touch(Graphics gr, float x, float y)
         {
             
             if (x >= X && x <= X + W &&
@@ -63,36 +61,13 @@ namespace MyPaint
             }
         }
 
-        public override void Resize(int c, int dx, int dy)
+        public override void Resize(int c, float dx, float dy)
         {
-            if (c == 1)
-            {
-                X += dx;
-                Y += dy;
-                W -= dx;
-                H -= dy;
-            }
-            else if (c == 2)
-            {
-                Y += dy;
-                W += dx;
-                H -= dy;
-            }
-            else if (c == 3)
-            {
-                X += dx;
-                W -= dx;
-                H += dy;
-            }
-            else if (c == 4)
-            {
-                W += dx;
-                H += dy;
-            }
-                
+            W += dx;
+            H += dy;
         }
 
-        public override void Move(int x, int y)
+        public override void Move(float x, float y)
         {
             X += x;
             Y += y;

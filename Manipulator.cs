@@ -23,17 +23,17 @@ namespace MyPaint
             gr.DrawRectangle(new Pen(Color.Black), new Rectangle((int)(X + W), (int)(Y + H), 4, 4)); //right-bot - 4
         }
 
-        public override void Move(int dx, int dy)
+        public override void Move(float dx, float dy)
         {
             throw new NotImplementedException();
         }
 
-        public override void Resize(int c, int dw, int dh)
+        public override void Resize(int c, float dw, float dh)
         {
             throw new NotImplementedException();
         }
 
-        public override bool Touch(Graphics gr, int x, int y)
+        public override bool Touch(Graphics gr, float x, float y)
         {
             if (x >= X - 2 && x <= X + 2 &&
                 y >= Y - 2 && y <= Y + 2)
@@ -84,47 +84,35 @@ namespace MyPaint
             Update();
         }
 
-        public virtual void Drag(int dx, int dy) //move-resize one method
+        public virtual void Drag(float dx, float dy) //move-resize one method
         {
             if (corner == -1)
             {
-                X += dx;
-                Y += dy;
                 fig.Move(dx, dy);
                 Update();
             }
             else if (corner == 1)
             {
-                
-                X += dx;
-                Y += dy;
-                W -= dx;
-                H -= dy;
-                fig.Resize(corner, dx, dy);
+                fig.Move(dx, dy);
+                fig.Resize(corner, -dx, -dy);
                 Update();
             }
             else if(corner == 2)
             {
-                Y += dy;
-                W += dx;
-                H -= dy;
-                fig.Resize(corner, dx, dy);
+                fig.Move(0, dy);
+                fig.Resize(corner, dx, -dy);
                 Update();
             }
 
             else if (corner == 3)
             {
-                X += dx;
-                W -= dx;
-                H -= dy;
-                fig.Resize(corner, dx, dy);
+                fig.Move(dx, 0);
+                fig.Resize(corner, -dx, dy);
                 Update();
             }
 
             else if (corner == 4)
             {
-                W += dx;
-                H += dy;
                 fig.Resize(corner, dx, dy);
                 Update();
             }

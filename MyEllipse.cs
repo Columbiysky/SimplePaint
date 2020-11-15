@@ -16,7 +16,7 @@ namespace MyPaint
         {
         }
 
-        public MyEllipse(int x, int y, int w, int h) : base(x, y, w, h)
+        public MyEllipse(float x, float y, float w, float h) : base(x, y, w, h)
         {
         }
 
@@ -38,7 +38,7 @@ namespace MyPaint
             gr.DrawRectangle(new Pen(Color.White), rect);
         }
 
-        public override bool Touch(Graphics gr, int x, int y)
+        public override bool Touch(Graphics gr, float x, float y)
         {
             if (x >= X && x <= X + W &&
                 y >= Y && y <= Y + H)
@@ -59,38 +59,16 @@ namespace MyPaint
                 return false;
             }
         }
-        public override void Move(int x, int y)
+        public override void Move(float x, float y)
         {
             X += x;
             Y += y;
         }
 
-        public override void Resize(int c, int dx, int dy)
+        public override void Resize(int c, float dx, float dy)
         {
-            if (c == 1)
-            {
-                X += dx;
-                Y += dy;
-                W -= dx;
-                H -= dy;
-            }
-            else if (c == 2)
-            {
-                Y += dy;
-                W += dx;
-                H -= dy;
-            }
-            else if (c == 3)
-            {
-                X += dx;
-                W -= dx;
-                H += dy;
-            }
-            else if (c == 4)
-            {
-                W += dx;
-                H += dy;
-            }
+            W += dx;
+            H += dy;
         }
     }
 }

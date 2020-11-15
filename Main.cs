@@ -32,7 +32,7 @@ namespace MyPaint
             RectangelButton.Click += (s, a) => {
                 if (CurrentFig != null) CurrentFig = null;
                 FigureCreator = Tools[RectangelButton.Text];
-                group.Clear(gr);
+                group.Clear();
                 manipulator.Clear(gr);
                 pictureBox1.Refresh();
             };
@@ -40,7 +40,7 @@ namespace MyPaint
             EllipseButton.Click += (s, a) => {
                 if (CurrentFig != null) CurrentFig = null;
                 FigureCreator = Tools[EllipseButton.Text];
-                group.Clear(gr);
+                group.Clear();
                 manipulator.Clear(gr);
                 pictureBox1.Refresh();
             };
@@ -48,7 +48,7 @@ namespace MyPaint
             SelectButton.Click += (s, a) => {
                 if (CurrentFig != null) CurrentFig = null;
                 FigureCreator = Tools[""];
-                group.Clear(gr);
+                group.Clear();
                 manipulator.Clear(gr);
                 pictureBox1.Refresh();
             };
@@ -57,7 +57,7 @@ namespace MyPaint
             {
                 if (CurrentFig != null) CurrentFig = null;
                 Figures.Clear();
-                group.Clear(gr);
+                group.Clear();
                 manipulator.Clear(gr);
                 pictureBox1.Refresh();
             };
@@ -73,8 +73,6 @@ namespace MyPaint
                 fig.Draw(e.Graphics);
 
             manipulator.Draw(e.Graphics);
-            //if (group.figuresCount != 0)
-                //group.Draw(e.Graphics);
         }
 
         private void pictureBox1_MouseDown(object sender, MouseEventArgs e)
@@ -88,15 +86,13 @@ namespace MyPaint
 
             else
             {
-                //if (manipulator.Touch(gr, e.X, e.Y)) return;
-                //if (group.Touch(gr, e.X, e.Y)) return;
+                if (manipulator.Touch(gr, e.X, e.Y)) return;
                 foreach (var fig in Figures) {
                     if (fig.Touch(gr, e.X, e.Y))
                     {
                         if (Control.ModifierKeys == Keys.Control)
                         {
                             group.Add(fig);
-                            //group.Touch(gr, e.X, e.Y);
                             manipulator.Attach(group);
                             P = e.Location;
                             break;
@@ -104,18 +100,13 @@ namespace MyPaint
 
                         else
                         {
-                            //group.Clear(gr);
-                            //group.Add(fig);
                             manipulator.Attach(fig);
                             P = e.Location;
                             break;
                         }
                     }
                     else
-                    {
-                        //group.Clear(gr);
                         manipulator.Clear(gr);
-                    }
 
                 }
 
@@ -127,19 +118,8 @@ namespace MyPaint
         private void pictureBox1_MouseMove(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left)
-            {
                 if (manipulator.fig != null)
                     manipulator.Drag(e.X - P.X, e.Y - P.Y);
-
-                //if (group.figuresCount != 0)
-                //{
-                //    if (group.Corner == -1)
-                //        group.Move(e.X - P.X, e.Y - P.Y);
-                //    else
-                //        group.Resize(group.Corner, e.X - P.X, e.Y - P.Y);
-                //    P = e.Location;
-                //}
-            }
             P = e.Location;
             pictureBox1.Refresh();
         }
@@ -147,15 +127,7 @@ namespace MyPaint
         private void pictureBox1_MouseUp(object sender, MouseEventArgs e)
         {
             if (e.X - P.X != 0 && e.Y - P.Y != 0)
-            {
                 manipulator.Clear(gr);
-                //group.Clear(gr);
-            }
-        }
-
-        private void ClearButton_Click(object sender, EventArgs e)
-        {
-
         }
     }
 }

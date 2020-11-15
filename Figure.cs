@@ -6,17 +6,17 @@ namespace MyPaint
 {
     abstract class Figure
     {
-        public int X { get; protected set; }
-        public int Y { get; protected set; }
-        public int W { get; protected set; }
-        public int H { get; protected set; }
+        public float X { get; protected set; }
+        public float Y { get; protected set; }
+        public float W { get; protected set; }
+        public float H { get; protected set; }
 
         public Figure()
         {
 
         }
 
-        public Figure(int x, int y, int w, int h)
+        public Figure(float x, float y, float w, float h)
         {
             X = x;
             Y = y;
@@ -25,8 +25,8 @@ namespace MyPaint
         }
 
         public abstract void Draw(Graphics gr);
-        public abstract bool Touch(Graphics gr, int x, int y);
-        public abstract void Resize(int c, int dx, int dy);
-        public abstract void Move(int dx, int dy);   
+        public abstract bool Touch(Graphics gr, float x, float y);
+        public abstract void Resize(int c, float dx, float dy);
+        public abstract void Move(float dx, float dy);   
     }
 }
