@@ -61,14 +61,16 @@ namespace MyPaint
                 manipulator.Clear(gr);
                 pictureBox1.Refresh();
             };
+
             NewFigBtn.Click += (s, a) =>
             {
                  if (manipulator.fig == null) return;
-                 GroupCreator grCreator = new GroupCreator();
-                 grCreator.CopyCreated(group);
-                 Tools.Add($"Group {comboBox1.Items.Count + 1}",grCreator);
+                 GroupCreator groupCreator = new GroupCreator();
+                 groupCreator.CopyCreated(group);
+                 Tools.Add($"Group {comboBox1.Items.Count + 1}",groupCreator);
                  comboBox1.Items.Add($"Group {comboBox1.Items.Count + 1}");
             };
+
             DrawGroupBtn.Click += (s, a) => 
             {
                 if (comboBox1.SelectedIndex == -1)
@@ -85,7 +87,6 @@ namespace MyPaint
         { 
             foreach (Figure fig in Figures)
                 fig.Draw(e.Graphics);
-
             manipulator.Draw(e.Graphics);
         }
 
@@ -93,7 +94,7 @@ namespace MyPaint
         {
             if (FigureCreator != null)
             {
-                var figure = FigureCreator.Create(e.X, e.Y/*, 50, 50*/);
+                var figure = FigureCreator.Create(e.X, e.Y);
                 figure.Draw(gr);
                 Figures.Add(figure);
             }
@@ -114,6 +115,7 @@ namespace MyPaint
 
                         else
                         {
+                            group.Clear();
                             manipulator.Attach(fig);
                             P = e.Location;
                             break;
@@ -121,11 +123,8 @@ namespace MyPaint
                     }
                     else
                         manipulator.Clear(gr);
-
                 }
-
-            }
-                
+            }  
         }
 
         [DebuggerStepThrough]

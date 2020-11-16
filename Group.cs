@@ -85,12 +85,7 @@ namespace MyPaint
                      return true;
                  }
             else
-            {
-                X = Y = W = H = 0;
-                corner = -1;
-                gr.DrawRectangle(new Pen(Color.White), new Rectangle((int)X - 1, (int)Y - 1, (int)W + 2, (int)H + 2));
                 return false;
-            }
         }
 
         public void Add(Figure f)
