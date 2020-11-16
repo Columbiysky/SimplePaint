@@ -22,7 +22,8 @@ namespace MyPaint
 
         public override void Draw(Graphics gr)
         {
-            //nothing here
+            foreach (var fig in figures)
+                fig.Draw(gr);
         }
 
         public override void Move(float dx, float dy)
@@ -46,7 +47,7 @@ namespace MyPaint
             H += dy;
         }
 
-        public override bool Touch(Graphics gr, float x, float y)
+        public override bool Touch(Graphics gr, float x, float y) //same as manipulator's touch method
         {
             if (x >= X - 2 && x <= X + 2 &&
                 y >= Y - 2 && y <= Y + 2)
@@ -94,6 +95,7 @@ namespace MyPaint
 
         public void Add(Figure f)
         {
+            //If wanted figure is already in group: skip it
             foreach (var fig in figures)
                 if (fig == f)
                     return;
@@ -113,6 +115,14 @@ namespace MyPaint
             Y = figures.Min(f => f.Y);
             W = figures.Max(f => f.X + f.W) - X;
             H = figures.Max(f => f.Y + f.H) - Y;
+        }
+
+        public override Figure Clone()
+        {
+            Group gr = new Group();
+            foreach (var f in figures)
+                gr.Add(f.Clone());
+            return gr;
         }
     }
 }

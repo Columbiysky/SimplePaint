@@ -27,6 +27,7 @@ namespace MyPaint
         public abstract void Draw(Graphics gr);
         public abstract bool Touch(Graphics gr, float x, float y);
         public abstract void Resize(int c, float dx, float dy);
-        public abstract void Move(float dx, float dy);   
+        public abstract void Move(float dx, float dy);
+        public abstract Figure Clone();
     }
 }

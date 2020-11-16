@@ -9,6 +9,7 @@ namespace MyPaint
 {
     interface IFigureCreator
     {
-        Figure Create(int x, int y, int w, int h);
+        Figure Create(float x, float y, float w, float h);
+        Figure Create(float x, float y);
     }
 }

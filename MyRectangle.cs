@@ -8,13 +8,18 @@ namespace MyPaint
     {
         public class RectangleCreator : IFigureCreator
         {
-            public Figure Create(int x, int y, int w, int h)
+            public Figure Create(float x, float y, float w, float h)
             {
                 return new MyRectangle(x, y, w, h);
             }
+
+            public Figure Create(float x, float y)
+            {
+                return new MyRectangle(x, y, 50, 50);
+            }
         }
 
-        private  MyRectangle(int x, int y, int w, int h) : base(x, y, w, h)
+        private  MyRectangle(float x, float y, float w, float h) : base(x, y, w, h)
         {
             //nothing here
         }
@@ -71,6 +76,10 @@ namespace MyPaint
         {
             X += x;
             Y += y;
+        }
+        public override Figure Clone()
+        {
+            return new MyRectangle(X,Y,W,H);
         }
     }
 }

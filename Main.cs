@@ -13,7 +13,7 @@ namespace MyPaint
         List<Figure> Figures = new List<Figure>();
         Manipulator manipulator = new Manipulator(); //decorator
         Group group = new Group(); //che-to tam
-        Dictionary<string, IFigureCreator> Tools = new Dictionary<string, IFigureCreator>();
+        Dictionary<string, IFigureCreator> Tools = new Dictionary<string, IFigureCreator>(); //Figure drawing tools
         IFigureCreator FigureCreator;
         Figure CurrentFig;
         Point P;
@@ -61,6 +61,20 @@ namespace MyPaint
                 manipulator.Clear(gr);
                 pictureBox1.Refresh();
             };
+            NewFigBtn.Click += (s, a) =>
+            {
+                 if (manipulator.fig == null) return;
+                 GroupCreator grCreator = new GroupCreator();
+                 grCreator.CopyCreated(group);
+                 Tools.Add($"Group {comboBox1.Items.Count + 1}",grCreator);
+                 comboBox1.Items.Add($"Group {comboBox1.Items.Count + 1}");
+            };
+            DrawGroupBtn.Click += (s, a) => 
+            {
+                if (comboBox1.SelectedIndex == -1)
+                    return;
+                FigureCreator = Tools[comboBox1.SelectedItem.ToString()];
+            };
 
             gr = pictureBox1.CreateGraphics();
             gr.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
@@ -79,7 +93,7 @@ namespace MyPaint
         {
             if (FigureCreator != null)
             {
-                var figure = FigureCreator.Create(e.X, e.Y, 50, 50);
+                var figure = FigureCreator.Create(e.X, e.Y/*, 50, 50*/);
                 figure.Draw(gr);
                 Figures.Add(figure);
             }

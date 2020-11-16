@@ -7,9 +7,14 @@ namespace MyPaint
     {
         public class EllipseCreator : IFigureCreator
         {
-            public Figure Create(int x, int y, int w, int h)
+            public Figure Create(float x, float y, float w, float h)
             {
                 return new MyEllipse(x, y, w, h);
+            }
+
+            public Figure Create(float x, float y)
+            {
+                return new MyEllipse(x, y, 50, 50);
             }
         }
         public MyEllipse()
@@ -69,6 +74,11 @@ namespace MyPaint
         {
             W += dx;
             H += dy;
+        }
+
+        public override Figure Clone()
+        {
+            return new MyEllipse(X, Y, W, H);
         }
     }
 }
