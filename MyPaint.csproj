@@ -46,6 +46,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ICommand.cs" />
+    <Compile Include="DrawCommand.cs" />
     <Compile Include="Group.cs" />
     <Compile Include="GroupCreator.cs" />
     <Compile Include="IFigureCreator.cs" />

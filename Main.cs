@@ -10,6 +10,7 @@ namespace MyPaint
 {
     public partial class Main : Form
     {
+        Graphics gr;
         List<Figure> Figures = new List<Figure>();
         Manipulator manipulator = new Manipulator(); //decorator
         Group group = new Group(); //che-to tam
@@ -17,7 +18,6 @@ namespace MyPaint
         IFigureCreator FigureCreator;
         Figure CurrentFig;
         Point P;
-        Graphics gr;
 
         public Main()
         {
@@ -95,7 +95,9 @@ namespace MyPaint
             if (FigureCreator != null)
             {
                 var figure = FigureCreator.Create(e.X, e.Y);
-                figure.Draw(gr);
+                DrawCommand dc = new DrawCommand(figure, gr);
+                dc.Execute();
+                //figure.Draw(gr);
                 Figures.Add(figure);
             }
 
