@@ -12,12 +12,14 @@ namespace MyPaint
     {
         Graphics gr;
         List<Figure> Figures = new List<Figure>();
+        Stack<Figure> UsedFigures = new Stack<Figure>();
         Manipulator manipulator = new Manipulator(); //decorator
         Group group = new Group(); //che-to tam
         Dictionary<string, IFigureCreator> Tools = new Dictionary<string, IFigureCreator>(); //Figure drawing tools
         IFigureCreator FigureCreator;
         Figure CurrentFig;
         Point P;
+        Command command;
 
         public Main()
         {
@@ -78,8 +80,33 @@ namespace MyPaint
                 FigureCreator = Tools[comboBox1.SelectedItem.ToString()];
             };
 
+            CancelButton.Click += (s, a) =>
+            {
+                if (Figures.Count != 0 && UsedFigures.Count != 0)
+                {
+                    int index = 0;
+                    CurrentFig = UsedFigures.Pop();
+                    foreach (var f in Figures)
+                        if (f.X == CurrentFig.X &&
+                            f.Y == CurrentFig.Y &&
+                            f.H == CurrentFig.H &&
+                            f.W == CurrentFig.W)
+                        {
+                            index = Figures.IndexOf(f);
+                            command.Undo();
+                            CurrentFig = command.Figure;
+                            //MessageBox.Show("found");
+                        }
+                    Figures[index] = CurrentFig;
+                    manipulator.Clear(gr);
+                    pictureBox1.Refresh();
+                }
+                else MessageBox.Show("Стек пуст");
+            };
+
             gr = pictureBox1.CreateGraphics();
             gr.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
+            command = new Command(gr);
         }
 
         [DebuggerStepThrough]
@@ -95,15 +122,19 @@ namespace MyPaint
             if (FigureCreator != null)
             {
                 var figure = FigureCreator.Create(e.X, e.Y);
-                DrawCommand dc = new DrawCommand(figure, gr);
-                dc.Execute();
-                //figure.Draw(gr);
+                figure.Draw(gr);
                 Figures.Add(figure);
+                command.UpdateList(figure, Figures);
+                UsedFigures.Push(figure);
             }
 
             else
             {
-                if (manipulator.Touch(gr, e.X, e.Y)) return;
+                if (manipulator.Touch(gr, e.X, e.Y))
+                {
+                    command.UpdateCurrentFigure(manipulator.fig);
+                    return;
+                }
                 foreach (var fig in Figures) {
                     if (fig.Touch(gr, e.X, e.Y))
                     {
@@ -141,8 +172,14 @@ namespace MyPaint
 
         private void pictureBox1_MouseUp(object sender, MouseEventArgs e)
         {
+            if (manipulator.fig != null)
+            {
+                UsedFigures.Push(manipulator.fig.Clone());
+            }
             if (e.X - P.X != 0 && e.Y - P.Y != 0)
+            {
                 manipulator.Clear(gr);
+            }
         }
     }
 }
