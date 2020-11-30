@@ -11,15 +11,12 @@ namespace MyPaint
     class Command : ICommand
     {
         Stack<Figure> commands = new Stack<Figure>();
-        List<Figure> figures = new List<Figure>();
         List<Figure> MainFigures = new List<Figure>();
         Figure fig;
-        Graphics gr;
         public Figure Figure { get => fig; }
 
-        public Command(Graphics gr_)
+        public Command()
         {
-            gr = gr_;
         }
 
         public void Execute()
@@ -29,22 +26,39 @@ namespace MyPaint
 
         public void Undo()
         {
-            fig = commands.Pop();
+            if (commands.Count != 0)
+            {
+                fig = commands.Pop();
+                //foreach (var f in MainFigures)
+                //    if (f.X == fig.X &&
+                //        f.Y == fig.Y &&
+                //        f.H == fig.H &&
+                //        f.W == fig.W)
+                //    {
+                //        fig = null;
+                //        break;
+                //    }
+            }
+            else
+                fig = null;
         }
 
-        public void UpdateList(Figure f,  List<Figure> mainFigures)
+        public void UpdateList(Figure f)
         {
-            figures.Add(f.Clone());
-            MainFigures = mainFigures;
+            MainFigures.Add(f.Clone());
             commands.Push(f.Clone());
         }
 
         public void UpdateCurrentFigure(Figure f)
         {
             fig = f.Clone();
-            commands.Push(fig.Clone());
+            commands.Push(f.Clone());
+        }
+
+        public void Clear()
+        {
+            MainFigures.Clear();
+            commands.Clear();
         }
     }
-
-
 }
