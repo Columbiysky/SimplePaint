@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace MyPaint
 {
-    interface IFigureCreator
+    interface ITools
     {
         Figure Create(float x, float y, float w, float h);
         Figure Create(float x, float y);

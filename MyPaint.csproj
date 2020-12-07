@@ -46,11 +46,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ICommand.cs" />
-    <Compile Include="Command.cs" />
+    <Compile Include="IStrategy.cs" />
+    <Compile Include="Strategy.cs" />
     <Compile Include="Group.cs" />
     <Compile Include="GroupCreator.cs" />
-    <Compile Include="IFigureCreator.cs" />
+    <Compile Include="ITools.cs" />
     <Compile Include="Figure.cs" />
     <Compile Include="MyEllipse.cs" />
     <Compile Include="MyRectangle.cs" />

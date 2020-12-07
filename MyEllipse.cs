@@ -5,7 +5,7 @@ namespace MyPaint
 {
     class MyEllipse : Figure
     {
-        public class EllipseCreator : IFigureCreator
+        public class EllipseCreator : ITools
         {
             public Figure Create(float x, float y, float w, float h)
             {

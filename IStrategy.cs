@@ -7,9 +7,8 @@ using System.Threading.Tasks;
 
 namespace MyPaint
 {
-    interface ICommand
+    interface IStrategy
     {
-        void Execute();
-        void Undo();
+        void select(Graphics gr, List<Figure> figures, Group group, Manipulator manipulator, float x, float y);
     }
 }

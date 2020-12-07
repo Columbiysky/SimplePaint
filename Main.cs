@@ -12,27 +12,29 @@ namespace MyPaint
     {
         Graphics gr;
         List<Figure> Figures = new List<Figure>();
-        Stack<Figure> UsedFigures = new Stack<Figure>();
+        //Stack<Figure> UsedFigures = new Stack<Figure>();
         Manipulator manipulator = new Manipulator(); //decorator
         Group group = new Group(); //che-to tam
-        Dictionary<string, IFigureCreator> Tools = new Dictionary<string, IFigureCreator>(); //Figure drawing tools
-        IFigureCreator FigureCreator;
-        Figure CurrentFig;
+        Dictionary<string, ITools> Tools = new Dictionary<string, ITools>(); //Figure drawing tools
+        ITools FigureCreator;
+        IStrategy select;
+        //Figure CurrentFig;
         Point P;
-        Command command = new Command();
+        FigureSelect command = new FigureSelect();
 
         public Main()
         {
             Tools.Add("", null);
             Tools.Add("Rectangle", new MyRectangle.RectangleCreator());
             Tools.Add("Ellipse", new MyEllipse.EllipseCreator());
+            select = new FigureSelect();
 
             this.ClientSize = new System.Drawing.Size(1500, 1000);
 
             InitializeComponent();
 
             RectangelButton.Click += (s, a) => {
-                if (CurrentFig != null) CurrentFig = null;
+                //if (CurrentFig != null) CurrentFig = null;
                 FigureCreator = Tools[RectangelButton.Text];
                 group.Clear();
                 manipulator.Clear(gr);
@@ -40,7 +42,7 @@ namespace MyPaint
             };
 
             EllipseButton.Click += (s, a) => {
-                if (CurrentFig != null) CurrentFig = null;
+                //if (CurrentFig != null) CurrentFig = null;
                 FigureCreator = Tools[EllipseButton.Text];
                 group.Clear();
                 manipulator.Clear(gr);
@@ -48,7 +50,7 @@ namespace MyPaint
             };
 
             SelectButton.Click += (s, a) => {
-                if (CurrentFig != null) CurrentFig = null;
+                //if (CurrentFig != null) CurrentFig = null;
                 FigureCreator = Tools[""];
                 group.Clear();
                 manipulator.Clear(gr);
@@ -57,10 +59,10 @@ namespace MyPaint
 
             ClearButton.Click += (s, a) =>
             {
-                if (CurrentFig != null) CurrentFig = null;
+                //if (CurrentFig != null) CurrentFig = null;
                 Figures.Clear();
                 group.Clear();
-                command.Clear();
+                //command.Clear();
                 manipulator.Clear(gr);
                 pictureBox1.Refresh();
             };
@@ -81,33 +83,33 @@ namespace MyPaint
                 FigureCreator = Tools[comboBox1.SelectedItem.ToString()];
             };
 
-            CancelButton.Click += (s, a) =>
-            {
-                if(Figures.Count != 0)
-                    if (UsedFigures.Count != 0)
-                    {
-                        int index = -1;
-                        CurrentFig = UsedFigures.Pop();
-                        foreach (var f in Figures)
-                            if (f.X == CurrentFig.X &&
-                                f.Y == CurrentFig.Y &&
-                                f.H == CurrentFig.H &&
-                                f.W == CurrentFig.W)
-                            {
-                                index = Figures.IndexOf(f);
-                                command.Undo();
-                                CurrentFig = command.Figure;
-                                if (CurrentFig == null)
-                                    Figures.RemoveAt(index);
-                                else
-                                    Figures[index] = CurrentFig;
-                                break;
-                            }
-                        manipulator.Clear(gr);
-                        pictureBox1.Refresh();
-                    }
-                    else MessageBox.Show("Стек пуст");
-            };
+            //CancelButton.Click += (s, a) =>
+            //{
+            //    if(Figures.Count != 0)
+            //        //if (UsedFigures.Count != 0)
+            //        //{
+            //            //int index = -1;
+            //            //CurrentFig = UsedFigures.Pop();
+            //            foreach (var f in Figures)
+            //                if (f.X == CurrentFig.X &&
+            //                    f.Y == CurrentFig.Y &&
+            //                    f.H == CurrentFig.H &&
+            //                    f.W == CurrentFig.W)
+            //                {
+            //                    //index = Figures.IndexOf(f);
+            //                    //command.Undo();
+            //                    //CurrentFig = command.Figure;
+            //                    if (CurrentFig == null)
+            //                        Figures.RemoveAt(index);
+            //                    else
+            //                        Figures[index] = CurrentFig;
+            //                    break;
+            //                }
+            //            manipulator.Clear(gr);
+            //            pictureBox1.Refresh();
+            //        //}
+            //        else MessageBox.Show("Стек пуст");
+            //};
 
             gr = pictureBox1.CreateGraphics();
             gr.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
@@ -128,40 +130,42 @@ namespace MyPaint
                 var figure = FigureCreator.Create(e.X, e.Y);
                 figure.Draw(gr);
                 Figures.Add(figure);
-                command.UpdateList(figure.Clone());
-                UsedFigures.Push(figure.Clone());
+                //command.UpdateList(figure.Clone());
+                //UsedFigures.Push(figure.Clone());
             }
 
             else
             {
                 if (manipulator.Touch(gr, e.X, e.Y))
                 {
-                    command.UpdateCurrentFigure(manipulator.fig.Clone());
+                    //command.UpdateCurrentFigure(manipulator.fig.Clone());
                     //UsedFigures.Push(manipulator.fig.Clone());
                     return;
                 }
-                foreach (var fig in Figures) {
-                    if (fig.Touch(gr, e.X, e.Y))
-                    {
-                        if (Control.ModifierKeys == Keys.Control)
-                        {
-                            group.Add(fig);
-                            manipulator.Attach(group);
-                            P = e.Location;
-                            break;
-                        }
+                //foreach (var fig in Figures) {
+                //    if (fig.Touch(gr, e.X, e.Y))
+                //    {
+                //        if (Control.ModifierKeys == Keys.Control)
+                //        {
+                //            group.Add(fig);
+                //            manipulator.Attach(group);
+                //            P = e.Location;
+                //            break;
+                //        }
 
-                        else
-                        {
-                            group.Clear();
-                            manipulator.Attach(fig);
-                            P = e.Location;
-                            break;
-                        }
-                    }
-                    else
-                        manipulator.Clear(gr);
-                }
+                //        else
+                //        {
+                //            group.Clear();
+                //            manipulator.Attach(fig);
+                //            P = e.Location;
+                //            break;
+                //        }
+                //    }
+                //    else
+                //        manipulator.Clear(gr);
+                //}
+                select.select(gr, Figures, group, manipulator, e.X, e.Y); //select.select - сильная строка....
+                P = e.Location;
             }  
         }
 
@@ -177,11 +181,11 @@ namespace MyPaint
 
         private void pictureBox1_MouseUp(object sender, MouseEventArgs e)
         {
-            if (manipulator.fig != null)
-            {
-                UsedFigures.Push(manipulator.fig.Clone());
-                //command.UpdateCurrentFigure(manipulator.fig.Clone());
-            }
+            //if (manipulator.fig != null)
+            //{
+            //    UsedFigures.Push(manipulator.fig.Clone());
+            //    command.UpdateCurrentFigure(manipulator.fig.Clone());
+            //}
             if (e.X - P.X != 0 && e.Y - P.Y != 0)
             {
                 manipulator.Clear(gr);

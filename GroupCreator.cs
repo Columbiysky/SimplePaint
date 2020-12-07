@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MyPaint
 {
-    class GroupCreator : IFigureCreator
+    class GroupCreator : ITools
     {
         Figure created;
         public Figure Create(float x, float y, float w, float h)

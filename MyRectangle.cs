@@ -6,7 +6,7 @@ namespace MyPaint
 {
     class MyRectangle : Figure
     {
-        public class RectangleCreator : IFigureCreator
+        public class RectangleCreator : ITools
         {
             public Figure Create(float x, float y, float w, float h)
             {
