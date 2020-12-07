@@ -27,7 +27,7 @@ namespace MyPaint
             Tools.Add("", null);
             Tools.Add("Rectangle", new MyRectangle.RectangleCreator());
             Tools.Add("Ellipse", new MyEllipse.EllipseCreator());
-            select = new FigureSelect();
+            
 
             this.ClientSize = new System.Drawing.Size(1500, 1000);
 
@@ -164,7 +164,17 @@ namespace MyPaint
                 //    else
                 //        manipulator.Clear(gr);
                 //}
-                select.select(gr, Figures, group, manipulator, e.X, e.Y); //select.select - сильная строка....
+                
+                if (Control.ModifierKeys == Keys.Control)
+                {
+                    select = new GroupSelect();
+                    select.select(gr, Figures, group, manipulator, e.X, e.Y); //select.select - сильная строка....
+                }
+                else
+                {
+                    select = new FigureSelect();
+                    select.select(gr, Figures, group, manipulator, e.X, e.Y); //select.select - сильная строка....
+                }
                 P = e.Location;
             }  
         }
