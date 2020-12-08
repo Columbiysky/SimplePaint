@@ -10,7 +10,7 @@ namespace MyPaint
 {
     class FigureSelect : IStrategy
     {
-        public void select(Graphics gr, List<Figure> figures, Group group, Manipulator manipulator, float x, float y)
+        public void Select(Graphics gr, List<Figure> figures, Group group, Manipulator manipulator, float x, float y)
         {
             foreach (var fig in figures)
             {
@@ -28,7 +28,7 @@ namespace MyPaint
 
     class GroupSelect : IStrategy
     {
-        public void select(Graphics gr, List<Figure> figures, Group group, Manipulator manipulator, float x, float y)
+        public void Select(Graphics gr, List<Figure> figures, Group group, Manipulator manipulator, float x, float y)
         {
             foreach (var fig in figures)
             {

@@ -17,7 +17,7 @@ namespace MyPaint
         Group group = new Group(); //che-to tam
         Dictionary<string, ITools> Tools = new Dictionary<string, ITools>(); //Figure drawing tools
         ITools FigureCreator;
-        IStrategy select;
+        IStrategy selector;
         //Figure CurrentFig;
         Point P;
         FigureSelect command = new FigureSelect();
@@ -167,13 +167,13 @@ namespace MyPaint
                 
                 if (Control.ModifierKeys == Keys.Control)
                 {
-                    select = new GroupSelect();
-                    select.select(gr, Figures, group, manipulator, e.X, e.Y); //select.select - сильная строка....
+                    selector = new GroupSelect();
+                    selector.Select(gr, Figures, group, manipulator, e.X, e.Y); //select.select - сильная строка....
                 }
                 else
                 {
-                    select = new FigureSelect();
-                    select.select(gr, Figures, group, manipulator, e.X, e.Y); //select.select - сильная строка....
+                    selector = new FigureSelect();
+                    selector.Select(gr, Figures, group, manipulator, e.X, e.Y); //select.select - сильная строка....
                 }
                 P = e.Location;
             }  

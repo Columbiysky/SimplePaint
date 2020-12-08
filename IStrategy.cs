@@ -9,6 +9,6 @@ namespace MyPaint
 {
     interface IStrategy
     {
-        void select(Graphics gr, List<Figure> figures, Group group, Manipulator manipulator, float x, float y);
+        void Select(Graphics gr, List<Figure> figures, Group group, Manipulator manipulator, float x, float y);
     }
 }

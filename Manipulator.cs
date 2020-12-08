@@ -10,6 +10,8 @@ namespace MyPaint
     class Manipulator : Figure
     {
         public Figure fig { get; private set; }
+        private delegate void DragByCorner(float dx, float dy);
+        DragByCorner drager;
         int corner = -1;
         public override void Draw(Graphics gr) //draw frame
         {
@@ -39,35 +41,40 @@ namespace MyPaint
             if (x >= X - 2 && x <= X + 2 &&
                 y >= Y - 2 && y <= Y + 2)
             {
-                corner = 1;
+                drager = ResizeByTopLeft;
+                //corner = 1;
                 return true;
             }
             //Right top corner
             else if (x >= X + W - 2 && x <= X + W + 2 &&
                  y >= Y - 2 && y <= Y + 2)
                  {
-                     corner = 2;
+                     drager = ResizeByTopRight;
+                     //corner = 2;
                      return true;
                  }
             //Left bot corner
             else if (x >= X - 2 && x <= X + 2 &&
                  y >= Y + H - 2 && y <= Y + H + 2)
                  {
-                     corner = 3;
+                     drager = ResizeByBotLeft;
+                     //corner = 3;
                      return true;
                  }
             //Right bot corner
             else if (x >= X + W - 2 && x <= X + W + 2 &&
                  y >= Y + H - 2 && y <= Y + H + 2)
                  {
-                     corner = 4;
+                     drager = ResizeByBotRight;
+                     //corner = 4;
                      return true;
                  }
             //No corner moving only
             else if (x >= X && x <= X + W &&
                  y >= Y && y <= Y + H)
                  {
-                     corner = -1;
+                     drager = moveFigure;
+                     //corner = -1;
                      Draw(gr);
                      return true;
                  }
@@ -75,7 +82,8 @@ namespace MyPaint
             else
             {
                 X = Y = W = H = 0;
-                corner = -1;
+                drager = moveFigure;
+                //corner = -1;
                 gr.DrawRectangle(new Pen(Color.White), new Rectangle((int)X - 1, (int)Y - 1, (int)W + 2, (int)H + 2));
                 return false;
             }
@@ -86,42 +94,78 @@ namespace MyPaint
             Update();
         }
 
+        private void moveFigure(float dx, float dy)
+        {
+            fig.Move(dx, dy);
+            Update();
+        }
+
+        private void ResizeByTopLeft(float dx, float dy)
+        {
+            fig.Move(dx, dy);
+            fig.Resize(1, -dx, -dy);
+        }
+
+        private void ResizeByTopRight(float dx, float dy)
+        {
+            fig.Move(0, dy);
+            fig.Resize(2, dx, -dy);
+            Update();
+        }
+
+        private void ResizeByBotLeft(float dx, float dy)
+        {
+            fig.Move(dx, 0);
+            fig.Resize(3, -dx, dy);
+            Update();
+        }
+
+        private void ResizeByBotRight(float dx, float dy)
+        {
+            fig.Resize(4, dx, dy);
+            Update();
+        }
+
         public virtual void Drag(float dx, float dy) //move-resize one method
         {
-            //No corner
-            if (corner == -1)
-            {
-                fig.Move(dx, dy);
-                Update();
-            }
-            //left top
-            else if (corner == 1)
-            {
-                fig.Move(dx, dy);
-                fig.Resize(corner, -dx, -dy);
-                Update();
-            }
-            //right top
-            else if(corner == 2)
-            {
-                fig.Move(0, dy);
-                fig.Resize(corner, dx, -dy);
-                Update();
-            }
-            //left bot
-            else if (corner == 3)
-            {
-                fig.Move(dx, 0);
-                fig.Resize(corner, -dx, dy);
-                Update();
-            }
-            //right bot
-            else if (corner == 4)
-            {
-                fig.Resize(corner, dx, dy);
-                Update();
-            }
+            drager(dx, dy);
+            Update();
+            ////No corner
+            //if (corner == -1)
+            //{
+            //    fig.Move(dx, dy);
+            //    Update();
+            //}
+            ////left top
+            //else if (corner == 1)
+            //{
+            //    fig.Move(dx, dy);
+            //    fig.Resize(corner, -dx, -dy);
+            //    Update();
+            //}
+            ////right top
+            //else if(corner == 2)
+            //{
+            //    fig.Move(0, dy);
+            //    fig.Resize(corner, dx, -dy);
+            //    Update();
+            //}
+            ////left bot
+            //else if (corner == 3)
+            //{
+            //    fig.Move(dx, 0);
+            //    fig.Resize(corner, -dx, dy);
+            //    Update();
+            //}
+            ////right bot
+            //else if (corner == 4)
+            //{
+            //    fig.Resize(corner, dx, dy);
+            //    Update();
+            //}
         }
+
+        
 
         public virtual void Clear(Graphics gr) //убрать ссылку на фигуру
         {
